@@ -1,5 +1,6 @@
 import requests
 import feedparser
+import os
 from bs4 import BeautifulSoup
 from newspaper import Article
 import logging
@@ -78,8 +79,10 @@ session.headers.update({
 })
 
 # Keep network calls short so the API can respond before frontend timeouts.
-REQUEST_TIMEOUT = 6
-ARTICLES_PER_SITE = 8
+REQUEST_TIMEOUT = int(os.environ.get('NEWS_REQUEST_TIMEOUT', '4'))
+ARTICLES_PER_SITE = int(os.environ.get('NEWS_ARTICLES_PER_SITE', '8'))
+NEWS_SOURCE_WORKERS = int(os.environ.get('NEWS_SOURCE_WORKERS', '8'))
+ENABLE_ARTICLE_METADATA = os.environ.get('ENABLE_ARTICLE_METADATA', 'False').lower() == 'true'
 PLACEHOLDER_IMAGE = 'https://placehold.co/800x450/e2e8f0/1a202c?text=NewsNepal'
 
 # Feed-first sources are faster and more reliable than homepage CSS scraping.
@@ -452,7 +455,7 @@ def enrich_article(article):
     return article
 
 def enrich_articles(articles):
-    if not articles:
+    if not articles or not ENABLE_ARTICLE_METADATA:
         return articles
     with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
         return list(executor.map(enrich_article, articles))
@@ -587,6 +590,10 @@ def fetch_site_news(site):
     feed_articles = fetch_feed_news(site)
     if feed_articles:
         return feed_articles
+
+    if site.get('feed_urls') and not site.get('allow_homepage_fallback', False):
+        logger.info(f"Skipping homepage fallback for {site['name']} after feed failure")
+        return []
 
     articles = []
     processed_urls = set()
@@ -799,7 +806,7 @@ def fetch_and_summarize_news(page=1, per_page=20, language='all'):
             all_articles = []
 
             # Fetch all source homepages in parallel and paginate the cached batch.
-            with concurrent.futures.ThreadPoolExecutor(max_workers=len(NEWS_SITES)) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=NEWS_SOURCE_WORKERS) as executor:
                 future_to_site = {executor.submit(fetch_site_news, site): site for site in NEWS_SITES}
                 for future in concurrent.futures.as_completed(future_to_site):
                     site = future_to_site[future]
