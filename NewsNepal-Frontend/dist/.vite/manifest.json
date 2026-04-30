@@ -1,0 +1,86 @@
+{
+  "_NewsCard-PXjpCNBC.js": {
+    "file": "assets/NewsCard-PXjpCNBC.js",
+    "name": "NewsCard",
+    "imports": [
+      "_vendor-Dgf3m1_q.js",
+      "index.html"
+    ]
+  },
+  "_ui-KVQ2TjTa.js": {
+    "file": "assets/ui-KVQ2TjTa.js",
+    "name": "ui",
+    "imports": [
+      "_vendor-Dgf3m1_q.js"
+    ]
+  },
+  "_vendor-Dgf3m1_q.js": {
+    "file": "assets/vendor-Dgf3m1_q.js",
+    "name": "vendor"
+  },
+  "index.html": {
+    "file": "assets/index-c2pe3nnr.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vendor-Dgf3m1_q.js",
+      "_ui-KVQ2TjTa.js"
+    ],
+    "dynamicImports": [
+      "src/components/NewsFeed.jsx",
+      "src/components/Bookmarks.jsx",
+      "src/components/Profile.jsx",
+      "src/components/AboutUs.jsx"
+    ],
+    "css": [
+      "assets/index-CXgyXkqt.css"
+    ]
+  },
+  "src/components/AboutUs.jsx": {
+    "file": "assets/AboutUs-EqKDmmTJ.js",
+    "name": "AboutUs",
+    "src": "src/components/AboutUs.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-Dgf3m1_q.js",
+      "index.html",
+      "_ui-KVQ2TjTa.js"
+    ]
+  },
+  "src/components/Bookmarks.jsx": {
+    "file": "assets/Bookmarks-BKu38XLb.js",
+    "name": "Bookmarks",
+    "src": "src/components/Bookmarks.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-Dgf3m1_q.js",
+      "_NewsCard-PXjpCNBC.js",
+      "index.html",
+      "_ui-KVQ2TjTa.js"
+    ]
+  },
+  "src/components/NewsFeed.jsx": {
+    "file": "assets/NewsFeed-BEwm1GHA.js",
+    "name": "NewsFeed",
+    "src": "src/components/NewsFeed.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-Dgf3m1_q.js",
+      "_NewsCard-PXjpCNBC.js",
+      "index.html",
+      "_ui-KVQ2TjTa.js"
+    ]
+  },
+  "src/components/Profile.jsx": {
+    "file": "assets/Profile-B28MW5g6.js",
+    "name": "Profile",
+    "src": "src/components/Profile.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-Dgf3m1_q.js",
+      "index.html",
+      "_ui-KVQ2TjTa.js"
+    ]
+  }
+}
