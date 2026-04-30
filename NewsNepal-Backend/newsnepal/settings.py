@@ -306,32 +306,6 @@ SESSION_COOKIE_AGE = 86400  # 24 hours
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# Add this to your settings
-FRONTEND_URL = 'https://news-frontend-rsa1.onrender.com'
-
-# Keep DEBUG = False for production
-DEBUG = False
-
-# Keep these settings in one place
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATIC_URL = '/static/'
-WHITENOISE_INDEX_FILE = True
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Update CORS settings to be more secure
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://news-frontend-rsa1.onrender.com"
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://news-frontend-rsa1.onrender.com"
-]
-
 # Keep one copy of LOGIN/LOGOUT URLs
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -339,19 +313,15 @@ LOGOUT_URL = '/logout/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Frontend URL
-FRONTEND_URL = 'https://news-frontend-rsa1.onrender.com'
+FRONTEND_URL = os.environ.get('FRONTEND_URL', FRONTEND_ORIGINS[0] if FRONTEND_ORIGINS else 'http://localhost:5173')
 
 # Add CSRF settings
-CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_HTTPONLY = False  # False to allow JavaScript access
-CSRF_COOKIE_SECURE = True
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_NAME = 'csrftoken'
 
 # Add Session settings
-SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_NAME = 'sessionid'
 
 # Add these settings

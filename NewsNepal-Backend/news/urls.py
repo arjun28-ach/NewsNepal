@@ -4,6 +4,8 @@ from django.urls import path
 from .views import auth_views, news_views
 
 urlpatterns = [
+    path('health/', news_views.health, name='health'),
+
     # News endpoints
     path('news/', news_views.news_api, name='news_api'),
 

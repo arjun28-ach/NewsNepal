@@ -11,6 +11,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def health(request):
+    return JsonResponse({'status': 'ok'})
+
 @ensure_csrf_cookie
 def home(request):
     return render(request, 'index.html')
